@@ -38,3 +38,9 @@ Thumbs.db
 # optional cache folders
 .cache/
 .parcel-cache/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
