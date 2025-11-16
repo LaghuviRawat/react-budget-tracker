@@ -15,9 +15,20 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Stop Old Container') {
             steps {
-                sh 'docker run -d -p 8080:80 myapp'
+                sh '''
+                    if [ $(docker ps -q --filter "name=myapp") ]; then
+                        docker stop myapp
+                        docker rm myapp
+                    fi
+                '''
+            }
+        }
+
+        stage('Run New Container') {
+            steps {
+                sh 'docker run -d --name myapp -p 8080:80 myapp'
             }
         }
     }
