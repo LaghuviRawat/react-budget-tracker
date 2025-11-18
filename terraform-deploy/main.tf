@@ -1,6 +1,11 @@
 provider "aws" {
       region = "ap-south-1"
 }
+#key pair login
+resource "aws_key_pair" "my_key" {
+      key_name   = "terra-key-ec2"
+      public_key = file("terra-key-ec2.pub")
+}
 
 # Create a security group that allows HTTP (port 80) and SSH (port 22)
 resource "aws_security_group" "budget_sg" {
@@ -21,6 +26,13 @@ resource "aws_security_group" "budget_sg" {
             cidr_blocks = ["0.0.0.0/0"]  # allow SSH (optional)
       }
 
+      ingress {
+            from_port   = 8080
+            to_port     = 8080
+            protocol    = "tcp"
+            cidr_blocks = ["0.0.0.0/0"]  # allow SSH (optional)
+      }
+
       egress {
             from_port   = 0
             to_port     = 0
@@ -35,18 +47,18 @@ resource "aws_security_group" "budget_sg" {
 
 # Create the EC2 instance
 resource "aws_instance" "budget_app" {
-      ami           = "ami-0a34b530c620f51a2"   # Amazon Linux 2 (Mumbai region)
-      instance_type = "t3.micro"
+      key_name      = aws_key_pair.my_key.key_name 
+      ami           = "ami-02b8269d5e85954ef"   #ubuntu 
+      instance_type = "t3.small"
       vpc_security_group_ids = [aws_security_group.budget_sg.id]
 
-      user_data = <<-EOF
-                  #!/bin/bash
-                  yum update -y
-                  yum install -y docker
-                  systemctl start docker
-                  systemctl enable docker
-                  docker run -d -p 80:80 laghuvirawat/react-budget-tracker:latest
-                  EOF
+      root_block_device {
+            volume_type = "gp3"
+            volume_size = 15
+            encrypted   = true
+      }
+
+      user_data = file("script.sh")
 
       tags = {
             Name = "ReactBudgetTracker"

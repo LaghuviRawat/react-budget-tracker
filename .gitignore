@@ -48,3 +48,6 @@ override.tf
 override.tf.json
 terraform.tfvars
 *.tfplan
+
+*.pem
+*.key
