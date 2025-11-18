@@ -53,7 +53,7 @@ pipeline {
                   sh """
                         docker rm -f myapp || true
                         docker pull ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                        docker run -d --name myapp -p 8081:80 ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                        docker run -d --name myapp -p 80:80 ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                   """
                   }
             }
