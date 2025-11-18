@@ -154,7 +154,9 @@ Real-world DevOps + Cloud deployment workflow
 🧑‍💻 Author
 
 👩‍💻 Laghuvi Rawat
+---
 📍 Passionate about full-stack development, cloud, and DevOps automation.
+---
 🚀 GitHub: LaghuviRawat
 
 ⭐ If you like this project, don’t forget to star the repository!
