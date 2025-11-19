@@ -3,8 +3,8 @@ pipeline {
 
       environment {
             DOCKERHUB_CREDENTIALS = 'dockerhub-creds'    // Jenkins credential ID
-            DOCKERHUB_USER = 'laghuvirawat'   // change this
-            IMAGE_NAME = 'myapp'                         // change if needed
+            DOCKERHUB_USER = 'laghuvirawat'   
+            IMAGE_NAME = 'myapp'                         
             IMAGE_TAG = "latest"
       }
 
